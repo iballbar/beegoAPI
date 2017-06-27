@@ -1,0 +1,2 @@
+# beegoAPI
+api beego struct 
