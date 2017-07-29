@@ -1,9 +1,9 @@
-package utils_test
+package byte_test
 
 import (
 	"testing"
 
-	"github.com/iballbar/beegoAPI/utils"
+	byte_utils "github.com/iballbar/beegoAPI/utils/byte"
 )
 
 func TestByteToBinaryString(t *testing.T) {
@@ -21,7 +21,7 @@ func TestByteToBinaryString(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			result := utils.ByteToBinaryString(tc.value)
+			result := byte_utils.ByteToBinaryString(tc.value)
 			if result != tc.expect {
 				t.Errorf("Expected %s got: %v", tc.expect, result)
 			}

@@ -1,10 +1,10 @@
-package utils_test
+package datetime_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/iballbar/beegoAPI/utils"
+	"github.com/iballbar/beegoAPI/utils/datetime"
 )
 
 func TestInTimeSpan(t *testing.T) {
@@ -34,7 +34,7 @@ func TestInTimeSpan(t *testing.T) {
 			if err != nil {
 				t.Fatal("cloud not parse check time:", err)
 			}
-			result := utils.InTimeSpan(startTime, endTime, checkTime)
+			result := datetime.InTimeSpan(startTime, endTime, checkTime)
 			if result != tc.expect {
 				t.Errorf("expected %v got: %v", tc.expect, result)
 			}
