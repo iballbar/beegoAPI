@@ -11,13 +11,13 @@ type API struct {
 	beego.Controller
 }
 
-type responseObject struct {
+type ResponseObject struct {
 	Code           int         `json:"code"`
 	Message        string      `json:"message"`
 	ResponseObject interface{} `json:"responseObject"`
 }
 
-func (api *API) baseURL() string {
+func (api *API) BaseURL() string {
 	var baseUrl string = api.Ctx.Input.Site() + fmt.Sprintf(":%d", api.Ctx.Input.Port())
 	if api.Ctx.Input.Header("X-Forwarded-Host") != "" {
 		baseUrl = api.Ctx.Input.Scheme() + "://" + api.Ctx.Input.Header("X-Forwarded-Host")
@@ -26,7 +26,7 @@ func (api *API) baseURL() string {
 }
 
 func (api *API) ResponseJSON(results interface{}, code int, msg string) {
-	response := &responseObject{
+	response := &ResponseObject{
 		Code:           code,
 		Message:        msg,
 		ResponseObject: results,
