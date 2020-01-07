@@ -7,3 +7,9 @@ import "time"
 func InTimeSpan(start, end, check time.Time) bool {
 	return check.After(start) && check.Before(end)
 }
+
+// InTimeSpanEqual check time between start and end including check time.
+// return boolean
+func InTimeSpanEqual(start, end, check time.Time) bool {
+	return (check.After(start) || check.Equal(start)) && (check.Before(end) || check.Equal(end))
+}
