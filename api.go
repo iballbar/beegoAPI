@@ -3,7 +3,7 @@ package beegoAPI
 import (
 	"fmt"
 
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/adapter"
 )
 
 //API for Client

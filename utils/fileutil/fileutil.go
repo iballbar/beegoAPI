@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/adapter"
 )
 
 func GetSafeFileName(input string) string {
