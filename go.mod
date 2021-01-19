@@ -1,4 +1,4 @@
-module github.com/iballbar/beegoAPI
+module github.com/iballbar/beegoAPI/v2
 
 go 1.15
 
