@@ -35,3 +35,13 @@ jobs:
         with:
           name: semgrep-html-report
           path: semgrep-report.html
+          
+  download-report:
+    needs: semgrep-scan
+    runs-on: self-hosted
+    steps:
+      - name: Download HTML report
+        uses: actions/download-artifact@v4
+        with:
+          name: semgrep-html-report
+          path: reports/
