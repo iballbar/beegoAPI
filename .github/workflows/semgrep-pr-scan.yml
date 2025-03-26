@@ -1,0 +1,39 @@
+name: Semgrep PR Scan & HTML Report
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  semgrep-scan:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep and generate JSON report
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: "auto"  # Use recommended rules
+          output: "semgrep-results.json"
+          severity: "ERROR"  # Fail workflow on critical issues
+
+      - name: Set up Node.js (to convert JSON to HTML)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install semgrep-to-html converter
+        run: npm install -g semgrep-to-html
+
+      - name: Generate HTML report
+        run: |
+          semgrep-to-html \
+            -i semgrep-results.json \
+            -o semgrep-report.html
+
+      - name: Upload HTML report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: semgrep-html-report
+          path: semgrep-report.html
