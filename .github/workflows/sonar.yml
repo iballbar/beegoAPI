@@ -1,14 +1,8 @@
 name: SonarQube Scan
 
 on:
-  push:
-    branches:
-      - main
-      - master
-      - develop
-      - 'releases/**'
   pull_request:
-      types: [opened, synchronize, reopened]
+    branches: [ master ]
 
 
 jobs:
@@ -16,11 +10,11 @@ jobs:
     name: Build and analyze
     runs-on: self-hosted
     permissions:
-       # required for all workflows
+      # required for all workflows
       security-events: write
-      contents: write
-      pull-requests: write
-      checks: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
     
     steps:
       - name: Checkout code
