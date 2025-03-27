@@ -8,6 +8,12 @@ jobs:
   semgrep-scan:
     name: semgrep-oss/scan
     runs-on: self-hosted
+    permissions:
+      # required for all workflows
+      security-events: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
     
     container:
       # A Docker image with Semgrep installed. Do not change this.
@@ -21,7 +27,6 @@ jobs:
         run: semgrep scan --config auto --sarif > findings.sarif
         
       - name: Upload SARIF reports to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v1
-        if: ${{ always() }}
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: findings.sarif
