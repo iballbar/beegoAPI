@@ -15,14 +15,28 @@ jobs:
       pull-requests: write
       checks: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go environment
+        uses: actions/setup-go@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
-          fetch-depth: 0  # a full history is required for pull request analysis
+          go-version: '1.15' # Specify your Go version
+          
+      - name: Run tests and generate coverage report
+        run: |
+          go test ./... -coverprofile=coverage.out
+          mkdir -p .qodana/code-coverage
+          mv coverage.out .qodana/code-coverage/
+          
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2024.3
         with:
-          pr-mode: false
+          args: "--baseline,qodana.sarif.json"
+          pr-mode: true
+          use-caches: true
+          upload-result: true
+          artifact-name: qodana-report
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1640167035 }}
           QODANA_ENDPOINT: 'https://qodana.cloud'
